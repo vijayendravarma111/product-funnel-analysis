@@ -124,7 +124,7 @@ This system helps:
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 product-funnel-analysis/
