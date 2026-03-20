@@ -124,14 +124,15 @@ This system helps:
 
 ---
 
-##  Project Structure
+## 📂 Project Structure
 
+```
 product-funnel-analysis/
-│
 ├── app.py
 ├── requirements.txt
 ├── data/
 │   └── clean_events.csv
+```
 
 ---
 
