@@ -25,7 +25,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.title("Product Funnel Analytics (FAANG-Level)")
+st.title("Product Funnel Analytics")
 
 # REAL-TIME SIMULATION
 st.sidebar.subheader(" Real-Time Simulation")
