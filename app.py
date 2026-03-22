@@ -7,14 +7,10 @@ import time
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 
-# ----------------------------
 # PAGE CONFIG
-# ----------------------------
 st.set_page_config(page_title="Funnel Analytics", layout="wide")
 
-# ----------------------------
 # GLASSMORPHISM UI
-# ----------------------------
 st.markdown("""
 <style>
 [data-testid="stAppViewContainer"] {
@@ -31,9 +27,7 @@ st.markdown("""
 
 st.title("Product Funnel Analytics (FAANG-Level)")
 
-# ----------------------------
 # REAL-TIME SIMULATION
-# ----------------------------
 st.sidebar.subheader(" Real-Time Simulation")
 run_live = st.sidebar.checkbox("Enable Live Data")
 
@@ -42,15 +36,12 @@ if run_live:
         st.sidebar.write(f"Updating data... {i+1}")
         time.sleep(1)
 
-# ----------------------------
 # LOAD DATA
-# ----------------------------
+
 df = pd.read_csv("data/clean_events.csv")
 df['event_timestamp'] = pd.to_datetime(df['event_timestamp'])
 
-# ----------------------------
 # SIDEBAR FILTERS
-# ----------------------------
 st.sidebar.header(" Filters")
 
 min_date = df['event_timestamp'].min()
@@ -61,9 +52,7 @@ date_range = st.sidebar.date_input("Select Date Range", [min_date, max_date])
 df = df[(df['event_timestamp'] >= pd.to_datetime(date_range[0])) &
         (df['event_timestamp'] <= pd.to_datetime(date_range[1]))]
 
-# ----------------------------
 # FUNNEL LOGIC
-# ----------------------------
 funnel = df.groupby('user_id')['event_type'].agg([
     lambda x: 'view' in x.values,
     lambda x: 'cart' in x.values,
@@ -78,9 +67,7 @@ purchase_users = funnel['purchased'].sum()
 
 conversion_rate = purchase_users / view_users if view_users else 0
 
-# ----------------------------
 # KPIs
-# ----------------------------
 st.subheader(" Key Metrics")
 
 col1, col2, col3 = st.columns(3)
@@ -88,9 +75,7 @@ col1.metric("👁️ Views", view_users)
 col2.metric("🛒 Purchases", purchase_users)
 col3.metric("💰 Conversion Rate", f"{round(conversion_rate*100,2)}%")
 
-# ----------------------------
 # FUNNEL CHART
-# ----------------------------
 st.subheader("🔻 Funnel Visualization")
 
 funnel_df = pd.DataFrame({
@@ -101,9 +86,7 @@ funnel_df = pd.DataFrame({
 fig_funnel = px.funnel(funnel_df, x="Users", y="Stage", color="Stage")
 st.plotly_chart(fig_funnel, use_container_width=True)
 
-# ----------------------------
 # DROP-OFF
-# ----------------------------
 st.subheader(" Drop-off Analysis")
 
 drop_df = pd.DataFrame({
@@ -117,9 +100,8 @@ drop_df = pd.DataFrame({
 fig_drop = px.bar(drop_df, x="Stage", y="Drop %", color="Stage", text_auto=True)
 st.plotly_chart(fig_drop, use_container_width=True)
 
-# ----------------------------
+
 # USER SEGMENTATION
-# ----------------------------
 st.subheader(" User Segmentation")
 
 user_activity = df.groupby('user_id').size().reset_index(name='event_count')
@@ -139,9 +121,7 @@ fig_segment = px.bar(segment_conversion, x='segment', y='purchased',
 
 st.plotly_chart(fig_segment, use_container_width=True)
 
-# ----------------------------
 # TIME TO PURCHASE
-# ----------------------------
 st.subheader("⏱  Time to Purchase")
 
 time_df = df[df['event_type'].isin(['view', 'purchase'])]
@@ -159,9 +139,7 @@ pivot = pivot.dropna()
 fig_time = px.histogram(pivot, x='time_to_purchase', nbins=30)
 st.plotly_chart(fig_time, use_container_width=True)
 
-# ----------------------------
 # A/B TEST
-# ----------------------------
 st.subheader(" A/B Test Simulation")
 
 np.random.seed(42)
@@ -172,9 +150,7 @@ ab = funnel.groupby('group')['purchased'].mean().reset_index()
 fig_ab = px.bar(ab, x='group', y='purchased', color='group', text_auto=True)
 st.plotly_chart(fig_ab, use_container_width=True)
 
-# ----------------------------
 # SANKEY DIAGRAM
-# ----------------------------
 st.subheader(" User Journey Flow")
 
 labels = ["View", "Cart", "Purchase"]
@@ -190,9 +166,7 @@ fig_sankey = go.Figure(data=[go.Sankey(
 
 st.plotly_chart(fig_sankey, use_container_width=True)
 
-# ----------------------------
 # ML MODEL
-# ----------------------------
 st.subheader(" ML Model (Predict Conversion)")
 
 ml_df = df.copy()
@@ -219,9 +193,7 @@ accuracy = model.score(X_test, y_test)
 
 st.write(f"Prediction Accuracy: {round(accuracy*100,2)}%")
 
-# ----------------------------
 # FINAL INSIGHTS
-# ----------------------------
 st.subheader(" Key Insights")
 
 st.success("""
@@ -233,9 +205,8 @@ st.success("""
 """)
 
 
-# ----------------------------
 # BUSINESS RECOMMENDATIONS
-# ----------------------------
+
 st.subheader("Business Recommendations (Actionable Insights)")
 
 st.markdown("""
