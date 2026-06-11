@@ -27,12 +27,24 @@ For a store processing **1 million monthly product views** with an **Average Ord
 
 ---
 
-## 🛠 Project Components & Tech Stack
+## 🛠 System Architecture & Technical Stack
 
-- **Data Stream:** A SQLite database (`data/events.db`) stores user event logs.
-- **Statistical Testing Engine:** A Python module (`src/ab_testing.py`) uses SciPy to calculate conversions and purchase durations to verify experiment validity.
-- **Predictive Model:** A Machine Learning Random Forest classifier identifies which features drive purchases.
-- **Interactive Dashboard:** An app (`app.py`) built with Streamlit and Plotly that displays the user flow, experiment results, and interactive simulators.
+```mermaid
+graph TD
+    A[data/generate_funnel_db.py] -- Simulates User Streams --> B[(data/events.db)]
+    B -- Raw SQL CTEs --> C[queries/funnel_analysis.sql]
+    B -- SciPy Inference Engine --> D[src/ab_testing.py]
+    B -- RandomForest Model --> E[app.py Streamlit App]
+    C --> E
+    D --> E
+    E --> F[Interactive Dashboard UI]
+```
+
+- **Data Engineering:** A database script ([generate_funnel_db.py](file:///c:/Users/vijayendravarma/Desktop/RESUME_PROJECTS/Data%20Analyst/product-funnel-analysis/data/generate_funnel_db.py)) simulates user sessions and generates a SQLite database ([events.db](file:///c:/Users/vijayendravarma/Desktop/RESUME_PROJECTS/Data%20Analyst/product-funnel-analysis/data/events.db)) containing session logs.
+- **SQL Analysis:** A SQL file ([funnel_analysis.sql](file:///c:/Users/vijayendravarma/Desktop/RESUME_PROJECTS/Data%20Analyst/product-funnel-analysis/queries/funnel_analysis.sql)) uses Common Table Expressions to calculate funnel drops and conversion metrics.
+- **Hypothesis Testing Engine:** A statistical module ([ab_testing.py](file:///c:/Users/vijayendravarma/Desktop/RESUME_PROJECTS/Data%20Analyst/product-funnel-analysis/src/ab_testing.py)) runs Chi-Square tests and Welch's t-tests to confirm experiment validity.
+- **Predictive ML Model:** A Random Forest classifier runs inside the dashboard to predict purchase probabilities.
+- **Interactive Dashboard:** A Streamlit interface ([app.py](file:///c:/Users/vijayendravarma/Desktop/RESUME_PROJECTS/Data%20Analyst/product-funnel-analysis/app.py)) visually maps the funnel flow using Sankey flows, calculator bell curves, and predictions.
 
 ---
 
