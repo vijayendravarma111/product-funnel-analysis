@@ -4,7 +4,7 @@ Helix Funnel Analytics is a product analytics platform and business case study. 
 
 ---
 
-## 📈 Executive Summary: Improving the Checkout Journey
+##  Executive Summary: Improving the Checkout Journey
 
 ### 1. The Business Challenge
 An e-commerce platform was losing significant revenue due to customers abandoning their shopping carts during checkout. To address this, the product team designed a new, simplified checkout process (**Variant B**) with fewer form fields and faster loading times. We ran an experiment to test this new design against the old checkout flow (**Control A**).
@@ -36,7 +36,7 @@ For a store processing **1 million monthly product views** with an **Average Ord
 
 ---
 
-## 🚀 Easy Setup Instructions
+##  Easy Setup Instructions
 
 ### 1. Clone & Set Up Environment
 Ensure you have Python 3.9+ installed. Set up a virtual environment:
