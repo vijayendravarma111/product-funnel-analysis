@@ -1,5 +1,7 @@
 # 🧬 Helix Funnel Analytics: Boosting E-Commerce Sales with Smart Product Design
 
+👉 **Live Dashboard Application:** [funnel-analytics.streamlit.app](https://funnel-analytics.streamlit.app/)
+
 Helix Funnel Analytics is a product analytics platform and business case study. It demonstrates how to use data engineering, statistical testing, and machine learning to identify user friction points and optimize sales funnels.
 
 ---
